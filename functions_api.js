@@ -110,6 +110,18 @@ function removeLastUser(){
     }
 }
 
+function removeFirstUser(){
+    try {
+        const userRemoved=users.shift();
+        if (!userRemoved) {
+            return sendReponse(404, 'ERROR')
+        }
+        return sendReponse(200, `The user ${userRemoved} was removed successfully. The new array is ${users}`);
+    } catch (error) {
+        return sendReponse(500, error)
+    }
+}
+
 console.log(getUser('Carlos'));
 
 console.log(getUsers());
@@ -119,3 +131,5 @@ console.log(addUser('Jacob'));
 console.log(removeUserByIndex(0));
 
 console.log(removeLastUser());
+
+console.log(removeFirstUser());
