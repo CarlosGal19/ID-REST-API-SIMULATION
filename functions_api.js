@@ -13,6 +13,9 @@ function sendReponse(code, body = null) {
       case 400:
         response.msg = "Endpoint not valid";
         break;
+      case 401:
+        response.msg = "The user already exists";
+        break;
       case 404:
         response.msg = "Not found";
         break;
@@ -55,6 +58,25 @@ function getUsers(){
     }
 }
 
+function addUser(newUser){
+    try {
+        if (!newUser) {
+            return sendReponse(400);
+        }
+
+        if (users.includes(newUser)) {
+            return sendReponse(401)
+        }
+
+        users.push(newUser);
+        return sendReponse(200, `User ${newUser} added successfully. The new array of users is: ${users} `);
+    } catch (error) {
+        return sendReponse(500, error);
+    }
+}
+
 console.log(getUser('Carlos'));
 
 console.log(getUsers());
+
+console.log(addUser('Jacob'));
