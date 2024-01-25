@@ -45,6 +45,16 @@ function getUser(userName){
     } catch (error) {
       return sendReponse(500, error);
     }
-  };
+};
+
+function getUsers(){
+    try {
+        return sendReponse(200, users);
+    } catch (error) {
+        return sendReponse(500, error);
+    }
+}
 
 console.log(getUser('Carlos'));
+
+console.log(getUsers());
