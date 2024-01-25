@@ -75,8 +75,30 @@ function addUser(newUser){
     }
 }
 
+function removeUserByIndex(index) {
+    try {
+        if (index<0) {
+            return sendReponse(400);
+        }
+
+        const user=users.at(index);
+
+        if (!user) {
+            return sendReponse(404);
+        }
+
+        users.splice(index, 1)
+        return sendReponse(200, `${user} removed successfully. The new array is ${users}`);
+    } catch (error) {
+        return sendReponse(500, error)
+    }
+
+}
+
 console.log(getUser('Carlos'));
 
 console.log(getUsers());
 
 console.log(addUser('Jacob'));
+
+console.log(removeUserByIndex(0));
