@@ -52,6 +52,9 @@ function getUser(userName){
 
 function getUsers(){
     try {
+        if (!users) {
+            return sendReponse(404, 'There´s no users')
+        }
         return sendReponse(200, users);
     } catch (error) {
         return sendReponse(500, error);
@@ -95,6 +98,18 @@ function removeUserByIndex(index) {
 
 }
 
+function removeLastUser(){
+    try {
+        const userRemoved=users.pop();
+        if (!userRemoved) {
+            return sendReponse(404, 'ERROR')
+        }
+        return sendReponse(200, `The user ${userRemoved} was removed successfully. The new array is ${users}`);
+    } catch (error) {
+        return sendReponse(500, error)
+    }
+}
+
 console.log(getUser('Carlos'));
 
 console.log(getUsers());
@@ -102,3 +117,5 @@ console.log(getUsers());
 console.log(addUser('Jacob'));
 
 console.log(removeUserByIndex(0));
+
+console.log(removeLastUser());
