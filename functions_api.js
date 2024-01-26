@@ -29,6 +29,7 @@ function sendReponse(code, body = null) {
     return response;
 }
 
+// It takes one username and return it if exists.
 function getUser(userName){
     try {
 
@@ -50,6 +51,7 @@ function getUser(userName){
     }
 };
 
+// It returns all existing users
 function getUsers(){
     try {
         if (!users) {
@@ -61,6 +63,7 @@ function getUsers(){
     }
 }
 
+// It adds a new user to the users array and return the user created, all users in new array and the user created
 function addUser(newUser){
     try {
         if (!newUser) {
@@ -78,6 +81,7 @@ function addUser(newUser){
     }
 }
 
+// It takes an index and, if found, removes the element from the array, it returns the deleted element and the new array.
 function removeUserByIndex(index) {
     try {
         if (index<0) {
@@ -98,6 +102,7 @@ function removeUserByIndex(index) {
 
 }
 
+// It removes the last element from the array, it returns the deleted element and the new array
 function removeLastUser(){
     try {
         const userRemoved=users.pop();
@@ -110,6 +115,7 @@ function removeLastUser(){
     }
 }
 
+// It removes the first element from the array, it returns the deleted element and the new array
 function removeFirstUser(){
     try {
         const userRemoved=users.shift();
@@ -122,6 +128,7 @@ function removeFirstUser(){
     }
 }
 
+// It takes the index and the new value, if index exists then replace the element with the new value
 function updateUserByIndex(index, userName){
     try {
         if (!userName) {
@@ -145,6 +152,7 @@ function updateUserByIndex(index, userName){
     }
 }
 
+// It return the number of users in the array
 function getUsersSize() {
     try {
         const length = users.length;
