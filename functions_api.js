@@ -90,7 +90,7 @@ function removeUserByIndex(index) {
             return sendReponse(404);
         }
 
-        users.splice(index, 1)
+        users.splice(index, 1);
         return sendReponse(200, `${user} removed successfully. The new array is ${users}`);
     } catch (error) {
         return sendReponse(500, error)
@@ -114,9 +114,32 @@ function removeFirstUser(){
     try {
         const userRemoved=users.shift();
         if (!userRemoved) {
-            return sendReponse(404, 'ERROR')
+            return sendReponse(404, 'ERROR');
         }
         return sendReponse(200, `The user ${userRemoved} was removed successfully. The new array is ${users}`);
+    } catch (error) {
+        return sendReponse(500, error);
+    }
+}
+
+function updateUserByIndex(index, userName){
+    try {
+        if (!userName) {
+            return sendReponse(400, 'ERROR');
+        }
+
+        if (index<0 || index >users.length-1) {
+            return sendReponse(404);
+        }
+
+        const userRemoved=users.at(index);
+        if (!userRemoved) {
+            return sendReponse(404);
+        }
+
+        users.splice(index, 1, userName)
+        return sendReponse(200, `The user ${userRemoved} was replace for ${userName} successfully. The new array is ${users}`);
+
     } catch (error) {
         return sendReponse(500, error)
     }
@@ -127,9 +150,13 @@ console.log(getUser('Carlos'));
 console.log(getUsers());
 
 console.log(addUser('Jacob'));
+console.log(addUser('Lorena'));
+console.log(addUser('Montse'));
 
 console.log(removeUserByIndex(0));
 
 console.log(removeLastUser());
 
 console.log(removeFirstUser());
+
+console.log(updateUserByIndex(1, 'Erasmo'));
