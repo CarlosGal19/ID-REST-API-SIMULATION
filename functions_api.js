@@ -53,7 +53,7 @@ function getUser(userName){
 function getUsers(){
     try {
         if (!users) {
-            return sendReponse(404, 'There´s no users')
+            return sendReponse(404, 'There´s no users');
         }
         return sendReponse(200, users);
     } catch (error) {
@@ -68,7 +68,7 @@ function addUser(newUser){
         }
 
         if (users.includes(newUser)) {
-            return sendReponse(401)
+            return sendReponse(401);
         }
 
         users.push(newUser);
@@ -93,7 +93,7 @@ function removeUserByIndex(index) {
         users.splice(index, 1);
         return sendReponse(200, `${user} removed successfully. The new array is ${users}`);
     } catch (error) {
-        return sendReponse(500, error)
+        return sendReponse(500, error);
     }
 
 }
@@ -102,11 +102,11 @@ function removeLastUser(){
     try {
         const userRemoved=users.pop();
         if (!userRemoved) {
-            return sendReponse(404, 'ERROR')
+            return sendReponse(404, 'ERROR');
         }
         return sendReponse(200, `The user ${userRemoved} was removed successfully. The new array is ${users}`);
     } catch (error) {
-        return sendReponse(500, error)
+        return sendReponse(500, error);
     }
 }
 
@@ -141,7 +141,7 @@ function updateUserByIndex(index, userName){
         return sendReponse(200, `The user ${userRemoved} was replace for ${userName} successfully. The new array is ${users}`);
 
     } catch (error) {
-        return sendReponse(500, error)
+        return sendReponse(500, error);
     }
 }
 
