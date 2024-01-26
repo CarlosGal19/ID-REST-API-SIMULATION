@@ -145,6 +145,19 @@ function updateUserByIndex(index, userName){
     }
 }
 
+function getUsersSize() {
+    try {
+        const length = users.length;
+        if (users.length<0) {
+            return sendReponse(404, 'ERROR');
+        }
+
+        return sendReponse(200, `The lenght of the array is: ${length}`);
+    } catch (error) {
+        return sendReponse(500, error);
+    }
+}
+
 console.log(getUser('Carlos'));
 
 console.log(getUsers());
@@ -160,3 +173,5 @@ console.log(removeLastUser());
 console.log(removeFirstUser());
 
 console.log(updateUserByIndex(1, 'Erasmo'));
+
+console.log(getUsersSize());
