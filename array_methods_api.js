@@ -57,4 +57,17 @@ function getBook(endpoint) {
   }
 }
 
+function getBooks() {
+  try {
+    if (!books) {
+      return sendReponse(404, 'There´s no books');
+    }
+    return sendReponse(200, books);
+  } catch (error) {
+    sendReponse(500, error)
+  }
+}
+
 console.log(getBook("9780399590504"));
+
+console.log(getBooks());
