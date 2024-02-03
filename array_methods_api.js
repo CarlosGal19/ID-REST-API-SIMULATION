@@ -64,10 +64,48 @@ function getBooks() {
     }
     return sendReponse(200, books);
   } catch (error) {
-    sendReponse(500, error)
+    return sendReponse(500, error)
+  }
+}
+
+function addBook(newBook) {
+  try {
+    if (!newBook) {
+      return sendReponse(400);
+    }
+
+    for (const key in newBook) {
+      if (!newBook[key]) {
+        return sendReponse(400, 'All fields are required');
+      }
+    }
+
+    const repeat = books.some(book => book.ISBN === newBook.ISBN);
+
+    if (repeat) {
+      return sendReponse(401);
+    }
+
+    books.push(newBook);
+    return sendReponse(200, 'The book ' + newBook + ' was append to books. ' + books);
+
+  } catch (error) {
+    return sendReponse(500, error);
   }
 }
 
 console.log(getBook("9780399590504"));
 
 console.log(getBooks());
+
+const objBook = {
+  "title": "Calculus",
+  "ISBN": "9686034927",
+  "year": 1987,
+  "genre": "Math",
+  "author": "Louis Leithold",
+  "stock": 1,
+  "publisher": "Harla"
+}
+
+console.log(addBook(objBook));
