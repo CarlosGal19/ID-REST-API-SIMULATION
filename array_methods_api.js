@@ -29,7 +29,7 @@ function sendReponse(code, body = null) {
   return response;
 }
 
-function getBookProperty(property, endpoint){
+function getBookProperty(property, endpoint) {
   for (const book of books) {
     if (book[property] === endpoint) {
       return `Found by ${property}.`;
@@ -49,7 +49,7 @@ function getBook(endpoint) {
 
     if (!isbn) {
       result = getBookProperty('title', endpoint);
-    }else{
+    } else {
       result = getBookProperty('ISBN', endpoint);
     }
 
@@ -121,8 +121,8 @@ function removeBookByTitleOrISBN(endpoint) {
 
     if (!isbn) {
       result = removeBook('title', endpoint);
-    }else{
-      result= removeBook('ISBN', endpoint);
+    } else {
+      result = removeBook('ISBN', endpoint);
     }
 
     if (result) {
@@ -137,7 +137,7 @@ function removeBookByTitleOrISBN(endpoint) {
 
 function filterBy(property, type) {
   try {
-    if (!property || !type) {
+    if (!property || !type || property !== 'genre' || property !== 'author' || property !== 'publisher') {
       return sendReponse(400);
     }
 
@@ -153,24 +153,46 @@ function filterBy(property, type) {
   }
 }
 
-// console.log(getBook("9780399590504"));
-// console.log(getBook("Educated"));
+function listBooks() {
+  try {
+    if (!books || books.length === 0) {
+      sendReponse(404, 'There´s no books')
+    }
 
-// console.log(getBooks());
+    const arrayBooks = [];
 
-// const objBook = {
-//   "title": "Calculus",
-//   "ISBN": "9686034927",
-//   "year": 1987,
-//   "genre": "Math",
-//   "author": "Louis Leithold",
-//   "stock": 1,
-//   "publisher": "Harla"
-// }
+    for (const book of books) {
+      const string = `${book.title} - ${book.author} - ${book.year}`;
+      arrayBooks.push(string);
+    }
 
-// console.log(addBook(objBook));
+    return sendReponse(200, arrayBooks);
 
-// console.log(removeBookByTitleOrISBN('9780984782857'));
-// console.log(removeBookByTitleOrISBN('The Alchemist'));
+  } catch (error) {
+    return sendReponse(500, error);
+  }
+}
+
+console.log(getBook("9780399590504"));
+console.log(getBook("Educated"));
+
+console.log(getBooks());
+
+const objBook = {
+  "title": "Calculus",
+  "ISBN": "9686034927",
+  "year": 1987,
+  "genre": "Math",
+  "author": "Louis Leithold",
+  "stock": 1,
+  "publisher": "Harla"
+}
+
+console.log(addBook(objBook));
+
+console.log(removeBookByTitleOrISBN('9780984782857'));
+console.log(removeBookByTitleOrISBN('The Alchemist'));
 
 console.log(filterBy('genre', 'Fiction'));
+
+console.log(listBooks());
