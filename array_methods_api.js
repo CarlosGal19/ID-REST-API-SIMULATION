@@ -87,14 +87,50 @@ function addBook(newBook) {
     }
 
     books.push(newBook);
-    return sendReponse(200, 'The book ' + newBook + ' was append to books. ' + books);
+    return sendReponse(200, 'The book ' + newBook + ' was appended to books. ' + books);
 
   } catch (error) {
     return sendReponse(500, error);
   }
 }
 
+function removeBook(property, endpoint) {
+  for (let i = 0; i < books.length; i++) {
+    if (books[i][property] === endpoint) {
+      books.splice(i, 1);
+      return `The book ${books[i]} was deleted by ${property}. ${books}`;
+    }
+  }
+  return false;
+}
+
+function removeBookByTitleOrISBN(endpoint) {
+  try {
+    if (!endpoint) {
+      return sendReponse(400);
+    }
+
+    const isbn = parseInt(endpoint);
+    let result = false;
+
+    if (!isbn) {
+      result = removeBook('title', endpoint);
+    }else{
+      result= removeBook('ISBN', endpoint);
+    }
+
+    if (result) {
+      return sendReponse(200, result);
+    }
+
+    return sendReponse(404);
+  } catch (error) {
+    return sendReponse(500, error)
+  }
+}
+
 console.log(getBook("9780399590504"));
+console.log(getBook("Educated"));
 
 console.log(getBooks());
 
@@ -109,3 +145,6 @@ const objBook = {
 }
 
 console.log(addBook(objBook));
+
+console.log(removeBookByTitleOrISBN('9780984782857'));
+console.log(removeBookByTitleOrISBN('The Alchemist'));
