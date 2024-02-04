@@ -1,58 +1,58 @@
-const users=['Carlos', 'Mafer', 'Maricruz', 'Brandon'];
+const users = ['Carlos', 'Mafer', 'Maricruz', 'Brandon'];
 
-const sendReponse=(code, body = null)=>{
+const sendReponse = (code, body = null) => {
     const response = {
         code,
         body,
-      };
+    };
 
-      switch (code) {
+    switch (code) {
         case 200:
-          response.msg = "Ok";
-          break;
+            response.msg = "Ok";
+            break;
         case 400:
-          response.msg = "Endpoint not valid";
-          break;
+            response.msg = "Endpoint not valid";
+            break;
         case 401:
-          response.msg = "The user already exists";
-          break;
+            response.msg = "The user already exists";
+            break;
         case 404:
-          response.msg = "Not found";
-          break;
+            response.msg = "Not found";
+            break;
         case 500:
-          response.msg = "Internal Server Error";
-          break;
+            response.msg = "Internal Server Error";
+            break;
         default:
-          response.msg = "Unknown status code";
-      }
+            response.msg = "Unknown status code";
+    }
 
-      return response;
+    return response;
 }
 
 // It takes one username and return it if exists.
-const getUser=(userName)=>{
+const getUser = (userName) => {
     try {
 
         if (!userName) {
-          return sendReponse(400);
+            return sendReponse(400);
         }
 
         const userIndex = users.indexOf(userName);
 
         if (userIndex >= 0) {
-          const user = users.at(userIndex);
+            const user = users.at(userIndex);
 
-          return sendReponse(200, user);
+            return sendReponse(200, user);
         }
 
         return sendReponse(404);
-      } catch (error) {
+    } catch (error) {
         return sendReponse(500, error);
-      }
+    }
 }
 
 // It returns all existing users
-const getUsers=()=>{
+const getUsers = () => {
     try {
         if (!users) {
             return sendReponse(404, 'There´s no users');
@@ -64,7 +64,7 @@ const getUsers=()=>{
 }
 
 // It adds a new user to the users array and return the user created, all users in new array and the user created
-const addUser=(newUser)=>{
+const addUser = (newUser) => {
     try {
         if (!newUser) {
             return sendReponse(400);
@@ -82,13 +82,13 @@ const addUser=(newUser)=>{
 }
 
 // It takes an index and, if found, removes the element from the array, it returns the deleted element and the new array.
-const removeUserByIndex=(index)=>{
+const removeUserByIndex = (index) => {
     try {
-        if (index<0) {
+        if (index < 0) {
             return sendReponse(400);
         }
 
-        const user=users.at(index);
+        const user = users.at(index);
 
         if (!user) {
             return sendReponse(404);
@@ -102,9 +102,9 @@ const removeUserByIndex=(index)=>{
 }
 
 // It removes the last element from the array, it returns the deleted element and the new array
-const removeLastUser=()=>{
+const removeLastUser = () => {
     try {
-        const userRemoved=users.pop();
+        const userRemoved = users.pop();
         if (!userRemoved) {
             return sendReponse(404, 'ERROR');
         }
@@ -115,9 +115,9 @@ const removeLastUser=()=>{
 }
 
 // It removes the first element from the array, it returns the deleted element and the new array
-const removeFirstUser=()=>{
+const removeFirstUser = () => {
     try {
-        const userRemoved=users.shift();
+        const userRemoved = users.shift();
         if (!userRemoved) {
             return sendReponse(404, 'ERROR');
         }
@@ -128,17 +128,17 @@ const removeFirstUser=()=>{
 }
 
 // It takes the index and the new value, if index exists then replace the element with the new value
-const updateUserByIndex=(index, userName)=>{
+const updateUserByIndex = (index, userName) => {
     try {
         if (!userName) {
             return sendReponse(400, 'ERROR');
         }
 
-        if (index<0 || index >users.length-1) {
+        if (index < 0 || index > users.length - 1) {
             return sendReponse(404);
         }
 
-        const userRemoved=users.at(index);
+        const userRemoved = users.at(index);
         if (!userRemoved) {
             return sendReponse(404);
         }
@@ -152,10 +152,10 @@ const updateUserByIndex=(index, userName)=>{
 }
 
 // It return the number of users in the array
-const getUsersSize=()=>{
+const getUsersSize = () => {
     try {
         const length = users.length;
-        if (users.length<0) {
+        if (users.length < 0) {
             return sendReponse(404, 'ERROR');
         }
 
