@@ -29,6 +29,15 @@ function sendReponse(code, body = null) {
   return response;
 }
 
+function getBookProperty(property, endpoint){
+  for (const book of books) {
+    if (book[property] === endpoint) {
+      return `Found by ${property}.`;
+    }
+  }
+  return false;
+}
+
 function getBook(endpoint) {
   try {
     if (!endpoint) {
@@ -36,19 +45,16 @@ function getBook(endpoint) {
     }
 
     const isbn = parseInt(endpoint);
+    let result = false;
 
     if (!isbn) {
-      for (const book of books) {
-        if (book.title === endpoint) {
-          return sendReponse(200, "Found by title");
-        }
-      }
+      result = getBookProperty('title', endpoint);
+    }else{
+      result = getBookProperty('ISBN', endpoint);
     }
 
-    for (const book of books) {
-      if (book.ISBN == isbn) {
-        return sendReponse(200, "Found by ISBN");
-      }
+    if (result) {
+      return sendReponse(200, result);
     }
 
     return sendReponse(404);
