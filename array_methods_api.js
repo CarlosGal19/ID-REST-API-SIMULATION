@@ -173,6 +173,24 @@ function listBooks() {
   }
 }
 
+function getBooksByYear(year) {
+  try {
+    if (!year) {
+      return sendReponse(400)
+    }
+
+    const booksByYear = books.filter(book => book.year === year);
+
+    if (booksByYear.length > 0) {
+      return sendReponse(200, booksByYear);
+    }
+
+    return sendReponse(404);
+  } catch (error) {
+    return sendReponse(500, error);
+  }
+}
+
 console.log(getBook("9780399590504"));
 console.log(getBook("Educated"));
 
@@ -196,3 +214,5 @@ console.log(removeBookByTitleOrISBN('The Alchemist'));
 console.log(filterBy('genre', 'Fiction'));
 
 console.log(listBooks());
+
+console.log(getBooksByYear(2011));
