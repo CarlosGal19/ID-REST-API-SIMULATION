@@ -191,28 +191,50 @@ function getBooksByYear(year) {
   }
 }
 
-console.log(getBook("9780399590504"));
-console.log(getBook("Educated"));
+function genreFullAvailability(genre) {
+  try {
+    if (!genre) {
+      return sendReponse(400);
+    }
 
-console.log(getBooks());
+    const booksGenre = books.filter(book => book.genre === genre);
+    const result = booksGenre.every(book => book.stock > 0);
 
-const objBook = {
-  "title": "Calculus",
-  "ISBN": "9686034927",
-  "year": 1987,
-  "genre": "Math",
-  "author": "Louis Leithold",
-  "stock": 1,
-  "publisher": "Harla"
+    if (result) {
+      return sendReponse(200, true);
+    }
+
+    return sendReponse(404, false);
+  } catch (error) {
+    return sendReponse(500, error);
+  }
 }
 
-console.log(addBook(objBook));
+// console.log(getBook("9780399590504"));
+// console.log(getBook("Educated"));
 
-console.log(removeBookByTitleOrISBN('9780984782857'));
-console.log(removeBookByTitleOrISBN('The Alchemist'));
+// console.log(getBooks());
 
-console.log(filterBy('genre', 'Fiction'));
+// const objBook = {
+//   "title": "Calculus",
+//   "ISBN": "9686034927",
+//   "year": 1987,
+//   "genre": "Math",
+//   "author": "Louis Leithold",
+//   "stock": 1,
+//   "publisher": "Harla"
+// }
 
-console.log(listBooks());
+// console.log(addBook(objBook));
 
-console.log(getBooksByYear(2011));
+// console.log(removeBookByTitleOrISBN('9780984782857'));
+// console.log(removeBookByTitleOrISBN('The Alchemist'));
+
+// console.log(filterBy('genre', 'Fiction'));
+
+// console.log(listBooks());
+
+// console.log(getBooksByYear(2011));
+
+console.log(genreFullAvailability('Fiction'));
+console.log(genreFullAvailability('Business'));
