@@ -210,6 +210,25 @@ function genreFullAvailability(genre) {
   }
 }
 
+function genrePartialAvailability(genre) {
+  try {
+    if (!genre) {
+      return sendReponse(400);
+    }
+
+    const booksGenre = books.filter(book => book.genre === genre);
+    const result = booksGenre.some(book => book.stock > 0);
+
+    if (result) {
+      return sendReponse(200, true);
+    }
+
+    return sendReponse(404, false);
+  } catch (error) {
+    return sendReponse(500, error);
+  }
+}
+
 // console.log(getBook("9780399590504"));
 // console.log(getBook("Educated"));
 
@@ -236,5 +255,7 @@ function genreFullAvailability(genre) {
 
 // console.log(getBooksByYear(2011));
 
-console.log(genreFullAvailability('Fiction'));
-console.log(genreFullAvailability('Business'));
+// console.log(genreFullAvailability('Fiction'));
+// console.log(genreFullAvailability('Business'));
+
+console.log(genrePartialAvailability('Fiction'));
