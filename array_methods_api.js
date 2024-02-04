@@ -48,9 +48,9 @@ function getBook(endpoint) {
     let result = false;
 
     if (!isbn) {
-      result = getBookProperty('title', endpoint);
+      result = getBookProperty("title", endpoint);
     } else {
-      result = getBookProperty('ISBN', endpoint);
+      result = getBookProperty("ISBN", endpoint);
     }
 
     if (result) {
@@ -66,11 +66,11 @@ function getBook(endpoint) {
 function getBooks() {
   try {
     if (!books) {
-      return sendReponse(404, 'There´s no books');
+      return sendReponse(404, "There´s no books");
     }
     return sendReponse(200, books);
   } catch (error) {
-    return sendReponse(500, error)
+    return sendReponse(500, error);
   }
 }
 
@@ -82,19 +82,21 @@ function addBook(newBook) {
 
     for (const key in newBook) {
       if (!newBook[key]) {
-        return sendReponse(400, 'All fields are required');
+        return sendReponse(400, "All fields are required");
       }
     }
 
-    const repeat = books.some(book => book.ISBN === newBook.ISBN);
+    const repeat = books.some((book) => book.ISBN === newBook.ISBN);
 
     if (repeat) {
       return sendReponse(401);
     }
 
     books.push(newBook);
-    return sendReponse(200, 'The book ' + newBook + ' was appended to books. ' + books);
-
+    return sendReponse(
+      200,
+      "The book " + newBook + " was appended to books. " + books
+    );
   } catch (error) {
     return sendReponse(500, error);
   }
@@ -120,9 +122,9 @@ function removeBookByTitleOrISBN(endpoint) {
     let result = false;
 
     if (!isbn) {
-      result = removeBook('title', endpoint);
+      result = removeBook("title", endpoint);
     } else {
-      result = removeBook('ISBN', endpoint);
+      result = removeBook("ISBN", endpoint);
     }
 
     if (result) {
@@ -131,17 +133,23 @@ function removeBookByTitleOrISBN(endpoint) {
 
     return sendReponse(404);
   } catch (error) {
-    return sendReponse(500, error)
+    return sendReponse(500, error);
   }
 }
 
 function filterBy(property, type) {
   try {
-    if (!property || !type || property !== 'genre' || property !== 'author' || property !== 'publisher') {
+    if (
+      !property ||
+      !type ||
+      (property !== "genre" &&
+        property !== "author" &&
+        property !== "publisher")
+    ) {
       return sendReponse(400);
     }
 
-    const booksBy = books.filter(book => book[property] === type);
+    const booksBy = books.filter((book) => book[property] === type);
 
     if (booksBy.length > 0) {
       return sendReponse(200, booksBy);
@@ -156,7 +164,7 @@ function filterBy(property, type) {
 function listBooks() {
   try {
     if (!books || books.length === 0) {
-      sendReponse(404, 'There´s no books')
+      sendReponse(404, "There´s no books");
     }
 
     const arrayBooks = [];
@@ -167,7 +175,6 @@ function listBooks() {
     }
 
     return sendReponse(200, arrayBooks);
-
   } catch (error) {
     return sendReponse(500, error);
   }
@@ -176,10 +183,10 @@ function listBooks() {
 function getBooksByYear(year) {
   try {
     if (!year) {
-      return sendReponse(400)
+      return sendReponse(400);
     }
 
-    const booksByYear = books.filter(book => book.year === year);
+    const booksByYear = books.filter((book) => book.year === year);
 
     if (booksByYear.length > 0) {
       return sendReponse(200, booksByYear);
@@ -197,8 +204,8 @@ function genreFullAvailability(genre) {
       return sendReponse(400);
     }
 
-    const booksGenre = books.filter(book => book.genre === genre);
-    const result = booksGenre.every(book => book.stock > 0);
+    const booksGenre = books.filter((book) => book.genre === genre);
+    const result = booksGenre.every((book) => book.stock > 0);
 
     if (result) {
       return sendReponse(200, true);
@@ -216,8 +223,8 @@ function genrePartialAvailability(genre) {
       return sendReponse(400);
     }
 
-    const booksGenre = books.filter(book => book.genre === genre);
-    const result = booksGenre.some(book => book.stock > 0);
+    const booksGenre = books.filter((book) => book.genre === genre);
+    const result = booksGenre.some((book) => book.stock > 0);
 
     if (result) {
       return sendReponse(200, true);
@@ -229,33 +236,72 @@ function genrePartialAvailability(genre) {
   }
 }
 
-// console.log(getBook("9780399590504"));
-// console.log(getBook("Educated"));
+function getCountBy(property, type) {
+  try {
+    if (
+      !property ||
+      !type ||
+      (property !== "genre" &&
+        property !== "author" &&
+        property !== "publisher")
+    ) {
+      return sendReponse(400);
+    }
 
-// console.log(getBooks());
+    const objCounter = {
+      property,
+      value: 0,
+    };
 
-// const objBook = {
-//   "title": "Calculus",
-//   "ISBN": "9686034927",
-//   "year": 1987,
-//   "genre": "Math",
-//   "author": "Louis Leithold",
-//   "stock": 1,
-//   "publisher": "Harla"
-// }
+    for (const book of books) {
+      if (book[property] === type) {
+        objCounter.value++;
+      }
+    }
 
-// console.log(addBook(objBook));
+    if (objCounter.value > 0) {
+      const { property, value } = objCounter;
+      return sendReponse(
+        200,
+        `The amount of boos with with the ${property}: ${type} is ${value}`
+      );
+    }
 
-// console.log(removeBookByTitleOrISBN('9780984782857'));
-// console.log(removeBookByTitleOrISBN('The Alchemist'));
+    return sendReponse(404);
+  } catch (error) {
+    return sendReponse(500, error);
+  }
+}
 
-// console.log(filterBy('genre', 'Fiction'));
+console.log(getBook("9780399590504"));
+console.log(getBook("Educated"));
 
-// console.log(listBooks());
+console.log(getBooks());
 
-// console.log(getBooksByYear(2011));
+const objBook = {
+  "title": "Calculus",
+  "ISBN": "9686034927",
+  "year": 1987,
+  "genre": "Math",
+  "author": "Louis Leithold",
+  "stock": 1,
+  "publisher": "Harla"
+}
 
-// console.log(genreFullAvailability('Fiction'));
-// console.log(genreFullAvailability('Business'));
+console.log(addBook(objBook));
+
+console.log(removeBookByTitleOrISBN('9780984782857'));
+console.log(removeBookByTitleOrISBN('The Alchemist'));
+
+console.log(filterBy('genre', 'Fiction'));
+
+console.log(listBooks());
+
+console.log(getBooksByYear(2011));
+
+console.log(genreFullAvailability('Fiction'));
+console.log(genreFullAvailability('Business'));
 
 console.log(genrePartialAvailability('Fiction'));
+
+console.log(getCountBy("genre", "Fiction"));
