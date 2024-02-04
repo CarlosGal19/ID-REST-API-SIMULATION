@@ -38,6 +38,7 @@ function getBookProperty(property, endpoint) {
   return false;
 }
 
+// It takes one book title OR ISBN and return it if exists.
 function getBook(endpoint) {
   try {
     if (!endpoint) {
@@ -63,6 +64,7 @@ function getBook(endpoint) {
   }
 }
 
+// It returns all existing books.
 function getBooks() {
   try {
     if (!books) {
@@ -74,6 +76,7 @@ function getBooks() {
   }
 }
 
+// It adds a new book to the books array and return the book created, and the new array, including the new book.
 function addBook(newBook) {
   try {
     if (!newBook) {
@@ -112,6 +115,7 @@ function removeBook(property, endpoint) {
   return false;
 }
 
+// It takes a title OR ISBN and, if found, removes the element from the array, it returns the deleted element and the new array.
 function removeBookByTitleOrISBN(endpoint) {
   try {
     if (!endpoint) {
@@ -137,6 +141,7 @@ function removeBookByTitleOrISBN(endpoint) {
   }
 }
 
+// The first param will be the filtering property (genre, author, or publisher), the second will be the string that is being searched. It returns all books that match the condition.
 function filterBy(property, type) {
   try {
     if (
@@ -161,6 +166,7 @@ function filterBy(property, type) {
   }
 }
 
+// It returns a list of all the books in the next format: Title - Author - Year.
 function listBooks() {
   try {
     if (!books || books.length === 0) {
@@ -180,6 +186,7 @@ function listBooks() {
   }
 }
 
+// It returns all books for a given year.
 function getBooksByYear(year) {
   try {
     if (!year) {
@@ -198,6 +205,7 @@ function getBooksByYear(year) {
   }
 }
 
+// It returns true or false if all books from a given genre have stock available.
 function genreFullAvailability(genre) {
   try {
     if (!genre) {
@@ -217,6 +225,7 @@ function genreFullAvailability(genre) {
   }
 }
 
+// It returns true or false if at least ONE book from a given genre has stock availability.
 function genrePartialAvailability(genre) {
   try {
     if (!genre) {
@@ -236,6 +245,7 @@ function genrePartialAvailability(genre) {
   }
 }
 
+// The first param will be the counting property (genre, author, or publisher), the second will be the string that is being searched. It returns a new object with the name of the property that is being counted and the counter.
 function getCountBy(property, type) {
   try {
     if (
