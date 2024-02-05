@@ -98,7 +98,7 @@ function addBook(newBook) {
     books.push(newBook);
     return sendReponse(
       200,
-      "The book " + newBook + " was appended to books. " + books
+      "The book " + newBook.title + " was appended to books. " + books
     );
   } catch (error) {
     return sendReponse(500, error);
@@ -108,8 +108,8 @@ function addBook(newBook) {
 function removeBook(property, endpoint) {
   for (let i = 0; i < books.length; i++) {
     if (books[i][property] === endpoint) {
-      books.splice(i, 1);
-      return `The book ${books[i]} was deleted by ${property}. ${books}`;
+      const deleted = books.splice(i, 1)[0];
+      return `The book ${deleted.title} was deleted by ${property}. ${books}`;
     }
   }
   return false;
